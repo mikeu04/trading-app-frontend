@@ -275,7 +275,7 @@
 //             level={2}
 //             style={{ color: "white", lineHeight: "inherit", marginBottom: 0 }}
 //           >
-//             Second-Hand Trading 
+//             Second-Hand Trading
 //         </Title>
 
 //         <Menu
@@ -347,6 +347,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Logout from "./components/Logout";
 import Homepage from "./components/Homepage";
+import TradeMyItems from "./components/TradeMyItems";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -383,6 +384,12 @@ function App() {
         return <Login onSuccess={handleLoginSuccess} />;
       case "register":
         return <Register />;
+      case "trade":
+        return isLoggedIn ? (
+          <TradeMyItems />
+        ) : (
+          <Login onSuccess={handleLoginSuccess} />
+        );
       default:
         return <div>Welcome to the Home Page!</div>;
     }
@@ -390,11 +397,14 @@ function App() {
 
   return (
     <Layout>
-      <Header style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Title
-          level={2}
-          style={{ color: "white", margin: 0 }}
-        >
+      <Header
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Title level={2} style={{ color: "white", margin: 0 }}>
           Second-Hand Trading
         </Title>
 
