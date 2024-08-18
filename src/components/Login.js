@@ -1,38 +1,39 @@
-import { Button, Form, Input, message, Modal } from 'antd'
-import React, { useState } from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { login } from '../utils'
-
+import { Button, Form, Input, message, Modal } from "antd";
+import React, { useState } from "react";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { login } from "../utils";
+import Register from "./Register";
 
 function Login({ onSuccess }) {
-  const [displayModal, setDisplayModal] = useState(false)
-
+  const [displayModal, setDisplayModal] = useState(false);
 
   const handleCancel = () => {
-    setDisplayModal(false)
-  }
-
+    setDisplayModal(false);
+  };
 
   const signinOnClick = () => {
-    setDisplayModal(true)
-  }
-
+    setDisplayModal(true);
+  };
 
   const onFinish = (data) => {
     login(data)
       .then(() => {
-        setDisplayModal(false)
-        message.success(`Welcome back`)
-        onSuccess()
-      }).catch((err) => {
-        message.error(err.message)
+        setDisplayModal(false);
+        message.success(`Welcome back`);
+        onSuccess();
       })
-  }
-
+      .catch((err) => {
+        message.error(err.message);
+      });
+  };
 
   return (
     <>
-      <Button shape="round" onClick={signinOnClick} style={{ marginRight: '20px' }}>
+      <Button
+        shape="round"
+        onClick={signinOnClick}
+        style={{ marginRight: "20px" }}
+      >
         Login
       </Button>
       <Modal
@@ -42,25 +43,18 @@ function Login({ onSuccess }) {
         footer={null}
         destroyOnClose={true}
       >
-        <Form
-          name="normal_login"
-          onFinish={onFinish}
-          preserve={false}
-        >
+        <Form name="normal_login" onFinish={onFinish} preserve={false}>
           <Form.Item
             name="username"
-            rules={[{ required: true, message: 'Please input your Username!' }]}
+            rules={[{ required: true, message: "Please input your Username!" }]}
           >
             <Input prefix={<UserOutlined />} placeholder="Username" />
           </Form.Item>
           <Form.Item
             name="password"
-            rules={[{ required: true, message: 'Please input your Password!' }]}
+            rules={[{ required: true, message: "Please input your Password!" }]}
           >
-            <Input.Password
-              prefix={<LockOutlined />}
-              placeholder="Password"
-            />
+            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
@@ -69,9 +63,13 @@ function Login({ onSuccess }) {
           </Form.Item>
         </Form>
       </Modal>
+
+      {/* register draft */}
+      <div>
+        no accout? <Register />
+      </div>
     </>
-  )
+  );
 }
 
-
-export default Login
+export default Login;

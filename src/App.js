@@ -333,7 +333,7 @@
 // export default App;
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { Layout, Menu, Typography } from "antd";
+import { Button, Layout, Menu, Typography } from "antd";
 import {
   UserOutlined,
   LoginOutlined,
@@ -348,12 +348,14 @@ import Register from "./components/Register";
 import Logout from "./components/Logout";
 import Homepage from "./components/Homepage";
 import TradeMyItems from "./components/TradeMyItems";
+import Search from "antd/lib/input/Search";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
+const HOME_PAGE_STATE = "home";
 
 function App() {
-  const [selectedMenu, setSelectedMenu] = useState("home");
+  const [selectedMenu, setSelectedMenu] = useState(HOME_PAGE_STATE);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Check session on page load
@@ -367,23 +369,21 @@ function App() {
   const handleLoginSuccess = (sessionToken) => {
     Cookies.set("sessionToken", sessionToken);
     setIsLoggedIn(true);
-    setSelectedMenu("home");
+    setSelectedMenu(HOME_PAGE_STATE);
   };
 
   const handleLogout = () => {
     Cookies.remove("sessionToken");
     setIsLoggedIn(false);
-    setSelectedMenu("home");
+    setSelectedMenu(HOME_PAGE_STATE);
   };
 
   const renderContent = () => {
     switch (selectedMenu) {
-      case "home":
+      case HOME_PAGE_STATE:
         return <Homepage isLoggedIn={isLoggedIn} onLogout={handleLogout} />;
-      case "login":
+      case "loginAndRegister":
         return <Login onSuccess={handleLoginSuccess} />;
-      case "register":
-        return <Register />;
       case "trade":
         return isLoggedIn ? (
           <TradeMyItems />
@@ -395,6 +395,25 @@ function App() {
     }
   };
 
+  // const renderContent = () => {
+  //   switch (selectedMenu) {
+  //     case "home":
+  //       return <Homepage isLoggedIn={isLoggedIn} onLogout={handleLogout} />;
+  //     case "login":
+  //       return <Login onSuccess={handleLoginSuccess} />;
+  //     case "register":
+  //       return <Register />;
+  //     case "trade":
+  //       return isLoggedIn ? (
+  //         <TradeMyItems />
+  //       ) : (
+  //         <Login onSuccess={handleLoginSuccess} />
+  //       );
+  //     default:
+  //       return <div>Welcome to the Home Page!</div>;
+  //   }
+  // };
+
   return (
     <Layout>
       <Header
@@ -402,22 +421,33 @@ function App() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          backgroundColor: "#3a00e5",
         }}
       >
-        <Title level={2} style={{ color: "white", margin: 0 }}>
-          Second-Hand Trading
-        </Title>
-
         <Menu
-          theme="dark"
+          className="navBar"
           mode="horizontal"
           selectedKeys={[selectedMenu]}
           onClick={(e) => setSelectedMenu(e.key)}
-          style={{ flex: 1, justifyContent: "flex-end" }}
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          <Menu.Item key="home" icon={<HomeOutlined />}>
-            Home
+          <Menu.Item
+            key={HOME_PAGE_STATE}
+            style={{ fontSize: "25px", marginLeft: 0 }}
+          >
+            Second-Hand Trading
           </Menu.Item>
+          <Search
+            style={{ width: "30%" }}
+            placeholder="search"
+            allowClear
+            // onSearch={onSearch}
+          />
+
           <Menu.Item key="buy" icon={<ShoppingOutlined />}>
             Buy
           </Menu.Item>
@@ -428,6 +458,30 @@ function App() {
             Trade My Items
           </Menu.Item>
           {!isLoggedIn && (
+            <Menu.Item key="loginAndRegister">
+              <Button className="loginButton">Login/Register</Button>
+            </Menu.Item>
+          )}
+          {isLoggedIn && (
+            <Menu.Item key="logout">
+              <Logout onLogout={handleLogout} />
+            </Menu.Item>
+          )}
+
+          {/* </Menu.Item>
+          {!isLoggedIn && (
+            <>
+              <Menu.Item key="loginAndRegister" className="loginButton">
+                loginAndRegister
+              </Menu.Item>
+            </>
+          )}
+          {isLoggedIn && (
+            <Menu.Item key="logout">
+              <Logout onLogout={handleLogout} />
+            </Menu.Item>
+          )} */}
+          {/* {!isLoggedIn && (
             <>
               <Menu.Item key="login" icon={<LoginOutlined />}>
                 Login
@@ -441,7 +495,7 @@ function App() {
             <Menu.Item key="logout" icon={<UserOutlined />}>
               <Logout onLogout={handleLogout} />
             </Menu.Item>
-          )}
+          )} */}
         </Menu>
       </Header>
       <Layout style={{ padding: "24px" }}>

@@ -1,5 +1,5 @@
-import { Button, Modal, message } from 'antd';
-import React, { useState } from 'react';
+import { Button, Modal, message } from "antd";
+import React, { useState } from "react";
 
 function Logout({ onLogout }) {
   const [displayModal, setDisplayModal] = useState(false);
@@ -21,7 +21,7 @@ function Logout({ onLogout }) {
 
   return (
     <>
-      <Button shape="round" onClick={logoutOnClick} type="primary">
+      <Button className="loginButton" onClick={logoutOnClick}>
         Log Out
       </Button>
       <Modal
@@ -31,7 +31,7 @@ function Logout({ onLogout }) {
         footer={null}
         destroyOnClose={true}
       >
-        <div style={{ textAlign: 'center', padding: '20px 0' }}>
+        <div style={{ textAlign: "center", padding: "20px 0" }}>
           <p>Are you sure you want to log out?</p>
           <Button type="primary" onClick={handleLogout}>
             Yes, Log Out

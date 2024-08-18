@@ -6,7 +6,15 @@
   font-size: inherit;
   color: currentColor;
 }
+.ant-menu-horizontal,
+.ant-menu-item::after,
+.ant-menu-submenu::after {
+  border: none !important;
+}
 
+/* .ant-menu-item-selected {
+  background-color: #f9bb00 !important;
+} */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -21,19 +29,14 @@ code {
     monospace;
 }
 
-.no-wave.ant-btn::after {
-  display: none !important;
+.title {
+  font-size: 100px;
 }
 
 .navBar {
   background-color: #3a00e5;
-  width: 100%;
-  height: 100px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   color: white;
-  padding: 0px 40px;
+  height: 100px;
 }
 
 .banner {
@@ -53,7 +56,7 @@ code {
   color: black;
 }
 
-.buttonYellow {
+.loginButton {
   background-color: #ffe100;
   width: 130px;
   height: 40px;
@@ -63,19 +66,20 @@ code {
   font: 14px;
   font-weight: 600;
   border: none;
+  text-align: center;
 }
 
-.buttonYellow:hover {
+.loginButton:hover {
   background-color: #f9bb00;
   border: none;
-  color: black;
+  color: white;
   border-radius: 10px;
   margin: 10px;
   font: 14px;
   font-weight: 600;
 }
 
-.buttonYellow:focus {
+.loginButton:focus {
   background-color: #f9bb00;
   border: none;
   color: black;
