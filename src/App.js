@@ -344,14 +344,13 @@ import {
   ShoppingOutlined,
 } from "@ant-design/icons";
 import Login from "./components/Login";
-import Register from "./components/Register";
 import Logout from "./components/Logout";
 import Homepage from "./components/Homepage";
 import TradeMyItems from "./components/TradeMyItems";
 import Search from "antd/lib/input/Search";
+import MyOrderedItems from "./components/MyOrderedItemPage";
 
 const { Header, Content } = Layout;
-const { Title } = Typography;
 const HOME_PAGE_STATE = "home";
 
 function App() {
@@ -390,29 +389,16 @@ function App() {
         ) : (
           <Login onSuccess={handleLoginSuccess} />
         );
+      case "cart":
+        return isLoggedIn ? (
+          <MyOrderedItems />
+        ) : (
+          <Login onSuccess={handleLoginSuccess} />
+        );
       default:
         return <div>Welcome to the Home Page!</div>;
     }
   };
-
-  // const renderContent = () => {
-  //   switch (selectedMenu) {
-  //     case "home":
-  //       return <Homepage isLoggedIn={isLoggedIn} onLogout={handleLogout} />;
-  //     case "login":
-  //       return <Login onSuccess={handleLoginSuccess} />;
-  //     case "register":
-  //       return <Register />;
-  //     case "trade":
-  //       return isLoggedIn ? (
-  //         <TradeMyItems />
-  //       ) : (
-  //         <Login onSuccess={handleLoginSuccess} />
-  //       );
-  //     default:
-  //       return <div>Welcome to the Home Page!</div>;
-  //   }
-  // };
 
   return (
     <Layout>
@@ -442,7 +428,7 @@ function App() {
             Second-Hand Trading
           </Menu.Item>
           <Search
-            style={{ width: "30%" }}
+            // style={{ width: "30%" }}
             placeholder="search"
             allowClear
             // onSearch={onSearch}
@@ -452,14 +438,14 @@ function App() {
             Buy
           </Menu.Item>
           <Menu.Item key="cart" icon={<ShoppingCartOutlined />}>
-            My Cart
+            My Perchased
           </Menu.Item>
           <Menu.Item key="trade" icon={<SwapOutlined />}>
             Trade My Items
           </Menu.Item>
           {!isLoggedIn && (
             <Menu.Item key="loginAndRegister">
-              <Button className="loginButton">Login/Register</Button>
+              <Button className="loginButton">Login / Register</Button>
             </Menu.Item>
           )}
           {isLoggedIn && (
@@ -467,35 +453,6 @@ function App() {
               <Logout onLogout={handleLogout} />
             </Menu.Item>
           )}
-
-          {/* </Menu.Item>
-          {!isLoggedIn && (
-            <>
-              <Menu.Item key="loginAndRegister" className="loginButton">
-                loginAndRegister
-              </Menu.Item>
-            </>
-          )}
-          {isLoggedIn && (
-            <Menu.Item key="logout">
-              <Logout onLogout={handleLogout} />
-            </Menu.Item>
-          )} */}
-          {/* {!isLoggedIn && (
-            <>
-              <Menu.Item key="login" icon={<LoginOutlined />}>
-                Login
-              </Menu.Item>
-              <Menu.Item key="register" icon={<AppstoreAddOutlined />}>
-                Register
-              </Menu.Item>
-            </>
-          )}
-          {isLoggedIn && (
-            <Menu.Item key="logout" icon={<UserOutlined />}>
-              <Logout onLogout={handleLogout} />
-            </Menu.Item>
-          )} */}
         </Menu>
       </Header>
       <Layout style={{ padding: "24px" }}>
