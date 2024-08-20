@@ -5,7 +5,7 @@ import { createVerticalItemCard } from "./ItemCard";
 
 const { Content, Sider } = Layout;
 
-// dummy items
+// list of dummy items
 const dummyItems = [
   {
     imgSrc: "https://via.placeholder.com/225x166",
