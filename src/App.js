@@ -96,7 +96,7 @@ function App() {
           }
         />
         <Route path="/search" element={<SearchResult />} />
-        {/* <Route path="/item/:itemId" element={<ItemInformation />} /> */}
+        <Route path="/item/:itemId" element={<ItemInformation />} />
       </Routes>
     );
   };
