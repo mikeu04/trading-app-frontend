@@ -39,32 +39,40 @@ function ItemsSummary() {
   return (
     <div
       style={{
-        padding: "20px 100px",
+        padding: "2% 5%",
         backgroundColor: "#3A00E524",
         borderRadius: "20px",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        width: "60%",
-        height: 200,
-        marginBottom: 80,
+        width: "80%",
+        maxWidth: "1400px",
+        marginBottom: "5%",
+        flexDirection: "row",
+        flexWrap: "wrap",
       }}
     >
-      <div style={{ textAlign: "left" }}>
-        <div style={{ fontSize: 20, fontWeight: 600 }}>
+      <div style={{ textAlign: "left", marginBottom: "20px" }}>
+        <div style={{ fontSize: "1vw", fontWeight: "bold" }}>
           Hi, user123@gmail.com!
         </div>
-        <div style={{ fontSize: 24 }}>
+        <div style={{ fontSize: "1.5vw" }}>
           You have uploaded 5 Items for trade in the past!
         </div>
-        <div style={{ fontSize: 16 }}>
+        <div style={{ fontSize: "1vw" }}>
           2 Items Traded, 2 Items on Sale, 1 Items in Stock
         </div>
       </div>
       <Button
         type="primary"
         className="buttonBlue"
-        style={{ fontSize: 20, width: 231, height: 50 }}
+        style={{
+          fontSize: "1vw",
+          width: "50%",
+          maxWidth: "230px",
+          minWidth: "10px",
+          height: "auto",
+        }}
       >
         Sell a new Item!
       </Button>
@@ -91,7 +99,10 @@ function MyUploadedItems() {
           >
             On Sale
           </Button>
-          <Button className="buttonTab" style={{ borderRadius: 0 }}>
+          <Button
+            className="buttonTab"
+            style={{ borderRadius: 0, borderLeft: 0, borderRight: 0 }}
+          >
             In Stock
           </Button>
           <Button
