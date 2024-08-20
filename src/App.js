@@ -261,7 +261,6 @@ function App() {
               padding: 24,
               margin: 0,
               height: "100vh - 114px",
-              overflow: "auto",
             }}
           >
             {renderContent()}

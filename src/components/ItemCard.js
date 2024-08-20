@@ -6,6 +6,7 @@ export function ItemCard({
   itemId,
   imgSrc,
   title,
+  category,
   price,
   description,
 }) {
@@ -16,12 +17,40 @@ export function ItemCard({
     navigate(`/item/${itemId}`);
   }
 
+  // handle checkout to Stripe
+  const handleCheckout = async () => {
+    try {
+      // Make an API call to your backend to create a Stripe checkout session
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          price: price,
+          title: title,
+        }),
+      });
+      const sessionId = await response.json();
+
+      // Redirect to Stripe Checkout
+      const stripe = window.Stripe("your-publishable-key"); // Replace with your Stripe publishable key
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+
+      if (error) {
+        console.error("Error redirecting to Stripe Checkout:", error);
+      }
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+    }
+  };
+
   // Function to create a vertical item card
   function createVerticalItemCard() {
     return (
       <div
         style={{
-          width: "100%",
+          width: "260px",
           height: "100%",
           flexDirection: "column",
           justifyContent: "flex-start",
@@ -50,7 +79,7 @@ export function ItemCard({
           style={{
             alignSelf: "stretch",
             color: "black",
-            fontSize: 20,
+            fontSize: 24,
             fontFamily: "Arial",
             fontWeight: "bold",
           }}
@@ -75,12 +104,12 @@ export function ItemCard({
           style={{
             alignSelf: "stretch",
             color: "black",
-            fontSize: 20,
+            fontSize: 24,
             fontFamily: "Arial",
             fontWeight: "bold",
           }}
         >
-          {price}
+          ${price}
         </div>
 
         <div
@@ -107,6 +136,8 @@ export function ItemCard({
               fontFamily: "Arial",
               letterSpacing: 0.14,
             }}
+            // connect to Stripe payment page related to this item
+            // onClick={() => handleCheckout(itemId)}
           >
             Checkout
           </div>
