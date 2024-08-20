@@ -3,10 +3,6 @@ import Cookies from "js-cookie";
 import { Button, Layout, Menu, Typography } from "antd";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import {
-  UserOutlined,
-  LoginOutlined,
-  AppstoreAddOutlined,
-  HomeOutlined,
   ShoppingCartOutlined,
   SwapOutlined,
   ShoppingOutlined,
@@ -25,7 +21,7 @@ const HOME_PAGE_STATE = "home";
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState(HOME_PAGE_STATE);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   // Check session on initial load
   useEffect(() => {
