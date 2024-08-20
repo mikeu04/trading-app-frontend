@@ -8,18 +8,37 @@ const { Content, Sider } = Layout;
 
 const SearchResult = () => {
   const [items, setItems] = useState([]); // State to store search results
+  const [itemsPerRow, setItemsPerRow] = useState(4);
   const [filters, setFilters] = useState({}); // State to store filter options
 
   // Fetch search results and set state
   useEffect(() => {
     // Example: utils.getSearchResults(searchQuery).then(data => setItems(data));
 
+    // calculate the number of items per row in list of search result based on the windowWidth
+    const updateItemsPerRow = () => {
+      setItemsPerRow(Math.floor((window.innerWidth - 220 - 48) / 260));
+    };
+
+    // initial calculation
+    updateItemsPerRow();
+
     const fetchData = async () => {
       // Implement fetch logic here and update the items state
       setItems(dummyItems);
     };
+
     fetchData();
-  }, []);
+
+    // Add event listener for window resize
+    // number of items per row is recalculated dynamically as the window size changes
+    window.addEventListener("resize", updateItemsPerRow);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", updateItemsPerRow);
+    };
+  }, []); // Empty dependency array ensures this runs only on mount and unmount
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
@@ -61,9 +80,13 @@ const SearchResult = () => {
       <Content
         style={{ marginLeft: "220px", padding: "0 24px", minHeight: 280 }}
       >
-        {/* scrollable List of Search Result, 4 items in a row */}
+        {/* responsive & scrollable List of Search Result */}
         <List
-          grid={{ gutter: 16, column: 4 }}
+          grid={{
+            gutter: "16px",
+            // Calculate columns (#items per row in the list) based on window width
+            column: itemsPerRow,
+          }}
           dataSource={items}
           renderItem={(item) => (
             <List.Item>
