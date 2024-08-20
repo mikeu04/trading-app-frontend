@@ -1,7 +1,7 @@
-import { Button } from "antd";
-import Search from "antd/lib/transfer/search";
+import { Button, Input } from "antd";
 import React from "react";
 import ItemsDisplay from "./ItemsDisplay";
+import { SearchOutlined } from "@ant-design/icons";
 
 function MyOrderedItems() {
   return (
@@ -13,13 +13,12 @@ function MyOrderedItems() {
           justifyContent: "space-between",
         }}
       >
-        <div style={{ width: "300px" }}>
-          <Search
-            placeholder="search"
-
-            // onSearch={onSearch}
-          />
-        </div>
+        <Input
+          prefix={<SearchOutlined />}
+          placeholder="Search..."
+          // onPressEnter={onSearch}
+          style={{ width: 300, height: 40, borderRadius: 10, margin: 10 }}
+        />
 
         <div>
           <Button

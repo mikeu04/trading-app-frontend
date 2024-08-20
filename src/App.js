@@ -333,29 +333,25 @@
 // export default App;
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { Button, Layout, Menu, Typography } from "antd";
+import { Button, Input, Layout, Menu, Typography } from "antd";
 import {
-  UserOutlined,
-  LoginOutlined,
-  AppstoreAddOutlined,
-  HomeOutlined,
   ShoppingCartOutlined,
   SwapOutlined,
   ShoppingOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Homepage from "./components/Homepage";
 import TradeMyItems from "./components/TradeMyItems";
-import Search from "antd/lib/input/Search";
 import MyOrderedItems from "./components/MyOrderedItemPage";
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const HOME_PAGE_STATE = "home";
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState(HOME_PAGE_STATE);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   // Check session on page load
   useEffect(() => {
@@ -402,59 +398,50 @@ function App() {
 
   return (
     <Layout>
-      <Header
+      <Menu
+        className="navBar"
+        mode="horizontal"
+        selectedKeys={[selectedMenu]}
+        onClick={(e) => setSelectedMenu(e.key)}
         style={{
-          display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          backgroundColor: "#3a00e5",
         }}
       >
-        <Menu
-          className="navBar"
-          mode="horizontal"
-          selectedKeys={[selectedMenu]}
-          onClick={(e) => setSelectedMenu(e.key)}
-          style={{
-            flex: 1,
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
+        <Menu.Item
+          key={HOME_PAGE_STATE}
+          style={{ fontSize: "30px", marginLeft: 0 }}
         >
-          <Menu.Item
-            key={HOME_PAGE_STATE}
-            style={{ fontSize: "25px", marginLeft: 0 }}
-          >
-            Second-Hand Trading
-          </Menu.Item>
-          <Search
-            // style={{ width: "30%" }}
-            placeholder="search"
-            allowClear
-            // onSearch={onSearch}
-          />
+          Second-Hand Trading
+        </Menu.Item>
+        <Input
+          prefix={<SearchOutlined />}
+          placeholder="Search..."
+          // onPressEnter={onSearch}
+          style={{ width: 350, borderRadius: 10 }}
+        />
 
-          <Menu.Item key="buy" icon={<ShoppingOutlined />}>
-            Buy
+        <Menu.Item key="buy" icon={<ShoppingOutlined />}>
+          Buy
+        </Menu.Item>
+        <Menu.Item key="cart" icon={<ShoppingCartOutlined />}>
+          My Perchased
+        </Menu.Item>
+        <Menu.Item key="trade" icon={<SwapOutlined />}>
+          Trade My Items
+        </Menu.Item>
+        {!isLoggedIn && (
+          <Menu.Item key="loginAndRegister">
+            <Button className="loginButton">Login / Register</Button>
           </Menu.Item>
-          <Menu.Item key="cart" icon={<ShoppingCartOutlined />}>
-            My Perchased
+        )}
+        {isLoggedIn && (
+          <Menu.Item key="logout">
+            <Logout onLogout={handleLogout} />
           </Menu.Item>
-          <Menu.Item key="trade" icon={<SwapOutlined />}>
-            Trade My Items
-          </Menu.Item>
-          {!isLoggedIn && (
-            <Menu.Item key="loginAndRegister">
-              <Button className="loginButton">Login / Register</Button>
-            </Menu.Item>
-          )}
-          {isLoggedIn && (
-            <Menu.Item key="logout">
-              <Logout onLogout={handleLogout} />
-            </Menu.Item>
-          )}
-        </Menu>
-      </Header>
+        )}
+      </Menu>
+
       <Layout style={{ padding: "24px" }}>
         <Content
           className="site-layout-background"
