@@ -16,6 +16,7 @@ import Homepage from "./components/Homepage";
 import TradeMyItems from "./components/TradeMyItems";
 import Search from "antd/lib/input/Search";
 import MyOrderedItems from "./components/MyOrderedItemPage";
+import SearchResult from "./components/SearchResult";
 
 const { Header, Content } = Layout;
 const HOME_PAGE_STATE = "home";
@@ -65,8 +66,7 @@ function App() {
 
       case "buy":
       case "search":
-        // Placeholder for Search Result Page
-        return <div>Search Result Page</div>;
+        return <SearchResult />;
 
       default:
         return <div>Welcome to the Home Page!</div>;
@@ -77,70 +77,132 @@ function App() {
     <Layout>
       <Header
         style={{
+          position: "fixed", // Make the header fixed
+          zIndex: 1, // Ensure it stays on top
+          width: "100%", // Full width of the window
+          backgroundColor: "#3a00e5",
+          paddingLeft: 80,
+          paddingRight: 80,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          backgroundColor: "#3a00e5",
         }}
       >
-        <Menu
-          className="navBar"
-          mode="horizontal"
-          selectedKeys={[selectedMenu]}
-          onClick={(e) => setSelectedMenu(e.key)}
-          style={{
-            flex: 1,
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Menu.Item
-            key={HOME_PAGE_STATE}
-            style={{ fontSize: "25px", marginLeft: 0 }}
-          >
-            Second-Hand Trading
-          </Menu.Item>
+        <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
+          <div style={{ flex: 1, display: "flex", alignItems: "center" }}>
+            <Menu
+              mode="horizontal"
+              selectedKeys={[selectedMenu]}
+              onClick={(e) => setSelectedMenu(e.key)}
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+                alignItems: "center",
+                backgroundColor: "transparent",
+                borderBottom: "none",
+              }}
+            >
+              <Menu.Item
+                key={HOME_PAGE_STATE}
+                style={{
+                  fontSize: "25px",
+                  marginLeft: 0,
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+              >
+                Second-Hand Trading
+              </Menu.Item>
 
-          <Search
-            // style={{ width: "30%" }}
-            placeholder="search"
-            allowClear
-            // Direct to Search Result page
-            onSearch={() => setSelectedMenu("search")}
-          />
+              <Search
+                style={{ width: "30%" }}
+                placeholder="Search..."
+                allowClear
+                onSearch={() => setSelectedMenu("search")}
+              />
 
-          <Menu.Item key="buy" icon={<ShoppingOutlined />}>
-            Buy
-          </Menu.Item>
+              <Menu.Item
+                key="buy"
+                icon={<ShoppingOutlined />}
+                style={{ color: "white" }}
+              >
+                Buy
+              </Menu.Item>
 
-          <Menu.Item key="myOrdered" icon={<ShoppingCartOutlined />}>
-            My Purchased
-          </Menu.Item>
+              <Menu.Item
+                key="myOrdered"
+                icon={<ShoppingCartOutlined />}
+                style={{ color: "white" }}
+              >
+                My Purchased
+              </Menu.Item>
 
-          <Menu.Item key="trade" icon={<SwapOutlined />}>
-            Trade My Items
-          </Menu.Item>
+              <Menu.Item
+                key="trade"
+                icon={<SwapOutlined />}
+                style={{ color: "white" }}
+              >
+                Trade My Items
+              </Menu.Item>
 
-          {!isLoggedIn && (
-            <Menu.Item key="loginAndRegister">
-              <Button className="loginButton">Login / Register</Button>
-            </Menu.Item>
-          )}
-          {isLoggedIn && (
-            <Menu.Item key="logout">
-              <Logout onLogout={handleLogout} />
-            </Menu.Item>
-          )}
-        </Menu>
+              {!isLoggedIn && (
+                <Menu.Item key="loginAndRegister">
+                  <Button
+                    className="loginButton"
+                    style={{
+                      backgroundColor: "#FFE100",
+                      borderRadius: "10px",
+                      color: "black",
+                    }}
+                  >
+                    Login / Register
+                  </Button>
+                </Menu.Item>
+              )}
+              {isLoggedIn && (
+                <Menu.Item key="logout">
+                  <Logout onLogout={handleLogout} />
+                </Menu.Item>
+              )}
+            </Menu>
+          </div>
+        </div>
       </Header>
 
-      <Layout style={{ padding: "24px" }}>
+      <div
+        style={{
+          width: "100%",
+          height: "50px", // Set the same height as the nav bar
+          backgroundColor: "#FFE100",
+          position: "fixed",
+          top: "64px", // Below the header
+          zIndex: 999, // Make sure the banner is below the header but above the content
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <span
+          style={{
+            color: "black",
+            fontSize: "20px",
+            fontFamily: "Inter",
+            fontWeight: "600",
+            letterSpacing: "0.20px",
+          }}
+        >
+          Order Now and Save 30% off!
+        </span>
+      </div>
+
+      <Layout style={{ padding: "24px", marginTop: "114px" }}>
         <Content
           className="site-layout-background"
           style={{
             padding: 24,
             margin: 0,
-            height: 800,
+            height: "100vh - 114px",
             overflow: "auto",
           }}
         >
