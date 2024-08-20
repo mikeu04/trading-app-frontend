@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { Button, Layout, Menu, Typography } from "antd";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+
 import {
   ShoppingCartOutlined,
   SwapOutlined,
   ShoppingOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
+import Search from "antd/lib/input/Search";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Homepage from "./components/Homepage";
 import TradeMyItems from "./components/TradeMyItems";
-import Search from "antd/lib/input/Search";
 import MyOrderedItems from "./components/MyOrderedItemPage";
 import SearchResult from "./components/SearchResult";
 import ItemInformation from "./components/ItemInformation";
